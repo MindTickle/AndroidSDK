@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mindtickle.integrations.android_sdk">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:supportsRtl="true">
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_lptauUbo5oklZUvxxuWgEgplAEjG82fa" />
+    </application>
+
+
+
+</manifest>
