@@ -65,7 +65,7 @@ For this you need
  
  Set the user's email in your app as below
  ```
- MindTickle.setUserEmail("rachit.agarwal@mindtickle.com");
+ MindTickle.setUserEmail(<user_email>);
  ```
  Note : Make sure this email is same as the email of the user on MindTickle Platform
  
