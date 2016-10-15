@@ -15,7 +15,7 @@ ext {
     gitUrl = 'https://github.com/MindTickle/AndroidSDK.git'
     githubRepository= 'MindTickle/AndroidSDK'
 
-    libraryVersion = '0.0.4'
+    libraryVersion = '0.0.5'
 
     developerId = 'himanshugupta'
     developerName = 'Himanshu Gupta'

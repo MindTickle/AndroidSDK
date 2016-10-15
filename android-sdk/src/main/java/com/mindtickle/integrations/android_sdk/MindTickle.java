@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.mindtickle.integrations.android_sdk.exceptions.MindTickleNotInitializedException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,7 +55,8 @@ public class MindTickle {
     }
 
 
-    private static String getJWTToken(String email) throws JSONException{
+    private static String getJWTToken(String email) throws JSONException, MindTickleNotInitializedException{
+        if(_secret==null||_secret.isEmpty()||_domain==null||_domain.isEmpty()) throw new MindTickleNotInitializedException();
         JSONObject payLoad = new JSONObject();
         JSONObject emailObject = new JSONObject();
         emailObject.put("email",email);
@@ -61,12 +64,12 @@ public class MindTickle {
         payLoad.put("domain",_domain);
         return Jwts.builder().setPayload(payLoad.toString()).signWith(SignatureAlgorithm.HS512,_secret).compact();
     }
-    public static void setUserEmail(String email) throws JSONException{
+    public static void setUserEmail(String email) throws JSONException, MindTickleNotInitializedException{
         _email = email;
         getBranchLink();
     }
 
-    private static void getBranchLink() throws JSONException{
+    private static void getBranchLink() throws JSONException, MindTickleNotInitializedException{
         BranchUniversalObject branchUniversalObject = new BranchUniversalObject()
                 .addContentMetadata("access_token", getJWTToken(_email))
                 .addContentMetadata("domain", _domain);
@@ -81,8 +84,7 @@ public class MindTickle {
         });
     }
 
-    public static String get_branch_url(){
-        Log.d("BAZOKA",_branch_url);
+    private static String get_branch_url(){
         return _branch_url;
     }
 
@@ -92,51 +94,48 @@ public class MindTickle {
         _context.startActivity(browserIntent);
     }
 
-    public static void testMindTickle() {
-
-    }
-    public static class ClickOnBranch extends AsyncTask<Void,Void,Void> {
-
-        private String link;
-
-        ClickOnBranch(String link){
-            this.link = link;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                URL url = new URL(link);
-                HttpsURLConnection httpClient = (HttpsURLConnection)url.openConnection();
-                print_content(httpClient);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        private void print_content(HttpsURLConnection con){
-            if(con!=null){
-
-                try {
-
-                    System.out.println("****** Content of the URL ********");
-                    BufferedReader br =
-                            new BufferedReader(
-                                    new InputStreamReader(con.getInputStream()));
-
-                    while ((br.readLine()) != null){
-                    }
-                    br.close();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        }
-
-    }
+//    public static class ClickOnBranch extends AsyncTask<Void,Void,Void> {
+//
+//        private String link;
+//
+//        ClickOnBranch(String link){
+//            this.link = link;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            try {
+//                URL url = new URL(link);
+//                HttpsURLConnection httpClient = (HttpsURLConnection)url.openConnection();
+//                print_content(httpClient);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        private void print_content(HttpsURLConnection con){
+//            if(con!=null){
+//
+//                try {
+//
+//                    System.out.println("****** Content of the URL ********");
+//                    BufferedReader br =
+//                            new BufferedReader(
+//                                    new InputStreamReader(con.getInputStream()));
+//
+//                    while ((br.readLine()) != null){
+//                    }
+//                    br.close();
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//
+//        }
+//
+//    }
 
 }

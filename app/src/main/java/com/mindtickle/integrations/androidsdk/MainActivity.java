@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.mindtickle.integrations.android_sdk.MindTickle;
+import com.mindtickle.integrations.android_sdk.exceptions.MindTickleNotInitializedException;
 
 import org.json.JSONException;
 
@@ -20,13 +21,12 @@ public class MainActivity extends AppCompatActivity {
         MindTickle.initialize(getApplicationContext(),"rachit.idea08.mindtickle.com","cc6ce537a8295708cbece6b715a242ee8d4d482222cdd4e12975b4792e4443a71a72135a152972506fe55777c34c4332");
         try {
             MindTickle.setUserEmail("rachit.agarwal@mindtickle.com");
-        } catch (JSONException e) {
+        } catch (JSONException | MindTickleNotInitializedException e) {
             e.printStackTrace();
         }
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),MindTickle.get_branch_url(),Toast.LENGTH_SHORT).show();
                 try {
                     MindTickle.openMindTickle();
                 } catch (IOException e) {
