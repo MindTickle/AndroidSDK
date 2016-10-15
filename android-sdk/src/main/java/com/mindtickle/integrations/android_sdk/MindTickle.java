@@ -91,6 +91,10 @@ public class MindTickle {
         browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         _context.startActivity(browserIntent);
     }
+
+    public static void testMindTickle() {
+
+    }
     public static class ClickOnBranch extends AsyncTask<Void,Void,Void> {
 
         private String link;
